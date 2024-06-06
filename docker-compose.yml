@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  autkin-jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    ports:
+      - "8088:8080"
+      - "50001:50000"
+    environment:
+      - http_proxy="http://proxy-dmz.intel.com:912/"
+      - https_proxy="http://proxy-dmz.intel.com:912/"
+      - no_proxy="127.0.0.1,localhost,intel.com"
+    volumes:
+      - ./demo_jenkins:/var/jenkins_home
+    networks:
+      - anton_network
+  ubuntu:
+    build:
+      context: .
+      dockerfile: ubuntu.dockerfile
+    command: tail -f /dev/null
+    # In case when you want to use agent run this on this container:
+    # curl -sO http://autkin-jenkins:8080/jnlpJars/agent.jar && java -jar agent.jar -url http://autkin-jenkins:8080/ -secret <key> -name "Ubuntu agent" -workDir "/tmp" &&
+    networks:
+      - anton_network
+
+networks:
+  anton_network:
+    driver: bridge
