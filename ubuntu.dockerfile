@@ -14,6 +14,10 @@ RUN cd /tmp && wget https://github.com/conda-forge/miniforge/releases/latest/dow
     ln -s /opt/miniforge3 /opt/miniconda3 && \
     export PATH=/opt/miniforge3/bin/:$PATH
 
+RUN /opt/miniforge3/bin/conda init bash && \
+    /opt/miniforge3/bin/conda create -y -n py310 python=3.10 && \
+    echo "source activate py310" >> ~/.bashrc
+
 # Add a test group and user
 RUN groupadd -g 2000 test_group && \
     useradd -l -m -u 2000 -g test_group -s /bin/bash -d /users/test_user test_user && \
