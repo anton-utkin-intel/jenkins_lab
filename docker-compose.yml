@@ -17,7 +17,7 @@ services:
     build:
       context: .
       dockerfile: ubuntu.dockerfile
-    command: tail -f /dev/null
+    # command: tail -f /dev/null
     # In case when you want to use agent run this on this container:
     # curl -sO http://autkin-jenkins:8080/jnlpJars/agent.jar && java -jar agent.jar -url http://autkin-jenkins:8080/ -secret <key> -name "Ubuntu agent" -workDir "/tmp" &&
     networks:
